@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {GlobalStyles} from './assets/GlobalStyles'
+import AuthState from './context/auth/AuthState';
+import Layout from './layouts/Layout'
+import {ThemeProvider } from 'styled-components';
+import { normalTheme } from './assets/ThemeStyle';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC = () => {
+
+
+    return (
+      <ThemeProvider theme={normalTheme}>
+      <AuthState>
+      <Router>
+        <GlobalStyles />
+        <Switch>
+         
+      <Layout>
+
+      </Layout>
+
+      </Switch>
+      </Router>
+      </AuthState>
+      </ThemeProvider>
+     
+    );
 }
 
 export default App;
