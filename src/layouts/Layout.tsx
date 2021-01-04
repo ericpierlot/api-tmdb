@@ -44,7 +44,7 @@ const Layout: React.FC<LayoutProps> = () => {
             <Route path='/movie-details/:id' exact>
               <MovieDetails />
             </Route>
-            <LoggedRoute path='/options' exact component={() => <Options userName={userName} newFirstname={newFirstname} newUserGender={newUserGender} />} />
+            <LoggedRoute path='/options' exact component={() => <Options userName={userName} newFirstname={newFirstname} newUserGender={newUserGender} userGender={userGender} />} />
           </Container>
       </Wrapper>
     );

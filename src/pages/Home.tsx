@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect, useCallback, useRef} from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom';
 import axios from 'axios'
@@ -11,7 +11,7 @@ margin-top: 1rem;
 display: flex;
 flex-direction: column;
 h2 {
-  margin-bottom: 2rem;
+ 
 }
 `
 
@@ -25,6 +25,7 @@ const Pictures = styled.div`
 display: flex;
 border-radius: 15px;
 justify-content: center;
+height: 225px;
 img {
     border-radius: 15px;
     width: auto;
@@ -57,21 +58,6 @@ margin-bottom: 2rem;
 const Notations = styled.div`
 width: 50%;
 padding: 1rem;
-border-radius: 5px;
-
-div {
-    padding: 0 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid ${({theme}) => theme.navText};
-    margin: 1rem 0;
-    border-radius: 5px;
-    &:hover {
-  background-color: rgba(255,255,255,0.1);
-}
-}
-
 a {
   text-decoration: none;
 }
@@ -91,10 +77,11 @@ h2 {
   position: absolute;
   width: 100%;
   background-color: rgba(0,0,0,0.7);
-  padding: 0.5rem;
-bottom:-32px;
+  bottom: -20px;
+  left: 0;
 border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  padding: 0 1rem 0 0.5rem;
 }
 transition: all 330ms ease;
 &:hover {
@@ -106,11 +93,73 @@ margin: 0 1rem;
 
 `;
 
+const RectangleTop = styled.div<any>`
+height: 150px;
+border-radius: 10px;
+background-image: url(${(props) => props.afficheMovie});
+background-repeat: no-repeat;
+background-position: cover;
+position: relative;
+box-shadow: 0 0 30px rgba(0,0,0,0.2);
+
+transition: all 0.5s linear;
+div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.6);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 1rem 0.5rem;
+}
+&:hover {
+ height: 300px;
+ box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+margin: 1rem 0;
+`
+
+const RectangleTop2 = styled.div<any>`
+height: 150px;
+border-radius: 10px;
+background-image: url(${(props) => props.afficheMovie});
+background-repeat: no-repeat;
+background-position: cover;
+position: relative;
+box-shadow: 0 0 30px rgba(0,0,0,0.2);
+
+transition: all 0.5s linear;
+div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.6);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+}
+margin: 1rem 0;
+&:hover {
+ height: 300px;
+ box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+`
+
 const Home: React.FC<HomeProps> = () => {
 const [isError, setIsError] = useState('');
 const [searchResponse, setSearchResponse] = useState([] as any)
 const [topRated, setTopRated] = useState([] as any);
 const [topPopular, setTopPopular] = useState([] as any);
+const cardTop = useRef<any>(null);
+const cardPop = useRef<any>(null);
+
 
 const fetchActualMovies = useCallback(
   async(debut:number = 0, fin:number = 3) => {
@@ -186,7 +235,23 @@ const fetchTopPopularMovies = useCallback(async (first:number, last:number) => {
    
  }, [fetchActualMovies, fetchTopRatedMovies, fetchTopPopularMovies]);
 
+//  useEffect(() => {
+//    if(cardTop.current) {
+//     cardTop.current.children[0].classList();
+//      }
 
+//  },[]) 
+
+const handleMouseMove = (e:any, i:number, type:any) => {
+
+  if(type.current) {
+    type.current.children[i].style.backgroundPositionY = (-e.nativeEvent.offsetY * 1.6 + 'px');
+   // cardTop.current.children[i].style.backgroundPositionY = (-e.nativeEvent.offsetX  + 'px');
+  }
+
+
+
+}
 
     return (
       <Container>
@@ -214,38 +279,48 @@ const fetchTopPopularMovies = useCallback(async (first:number, last:number) => {
         <Wrapper>
         <Notations>
             <h2>TOP 10 Populaire</h2>
+            <div ref={cardTop}>
             {
           topPopular.totalResults > 0 &&
-          topPopular.results[0].map((item: any) => {
-            const { id, title} = item;
+          topPopular.results[0].map((item: any, idx:any) => {
+            const { id, title, poster_path} = item;
             return (
-              
-                <div key={id}>
-                  <Link to={`/movie-details/${id}`}>
-                <h4>{title}</h4>
-                </Link>
+                <RectangleTop key={id} afficheMovie={`https://image.tmdb.org/t/p/w500/${poster_path}`} onMouseMove={(e:any, i:number) => handleMouseMove(e, idx, cardTop)}>
+               <Link to={`/movie-details/${id}`}>
+                  <div>
+   
+              {title}
+
                 </div>
+                </Link>
+                </RectangleTop>
 
             );
           })
         }
+        </div>
            </Notations>
           <Notations>
-            <h2>TOP 10 Noté</h2>
+            <h2>TOP 10 Note</h2>
+            <div ref={cardPop}>
+
             {
           topRated.totalResults > 0 &&
-          topRated.results[0].map((item: any) => {
-            const { id, title} = item;
+          topRated.results[0].map((item: any, idx:number) => {
+            const { id, title, poster_path } = item;
             return (
-              <Link to={`/movie-details/${id}`} key={id}>
-                <div>
-                <h4>{title}</h4>
-                </div>
-              </Link>
+              <RectangleTop2 key={id} afficheMovie={`https://image.tmdb.org/t/p/w500/${poster_path}`} onMouseMove={(e:any, i:number) => handleMouseMove(e, idx, cardPop)}>
+              <Link to={`/movie-details/${id}`}>
+              <div>
+          {title}
+            </div>
+            </Link>
+
+            </RectangleTop2>
             );
           })
         }
-
+</div>
           </Notations>
         </Wrapper>
       </Container>
@@ -253,4 +328,3 @@ const fetchTopPopularMovies = useCallback(async (first:number, last:number) => {
 }
 
 export default Home;
-

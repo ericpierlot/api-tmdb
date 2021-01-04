@@ -108,6 +108,27 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
     const [isError, setIsError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [movieData, setMovieData] = useState([] as any);
+    const [movieReviews, setMovieReviews] = useState([] as any);
+
+    const fetchMovieReviews = async(ID:string) => {
+        setIsLoading(true);
+        setIsError('');
+  
+          try {
+              const API_KEY = `1b7ca23a5b227d1913162e359973237a`;
+              await axios.get(
+                  `https://api.themoviedb.org/3/movie/${ID}/reviews?api_key=${API_KEY}&language=en-US`)
+                  .then(({data}) => {
+                    setMovieReviews([data]);
+                      setIsLoading(false);
+                  });
+  
+          } catch (error) {
+              setIsError('Une erreur est survenue, veuillez réessayer.')
+              setIsLoading(false);
+          }
+  
+      }
 
     const fetchMovieDetails = async(ID:string) => {
       setIsLoading(true);
@@ -130,7 +151,9 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
     }
 
   useEffect(() => {
+    fetchMovieReviews(id);
     fetchMovieDetails(id);
+
   }, [id]);
 
   const checkingColor = (num:number) => {
@@ -180,6 +203,23 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
                         </div>
                     </Notations>
                     </Wrapper>
+                    <Commentaires>
+                        {movieReviews[0].total_results > 0 ?
+                        movieReviews[0].results.map((item:any) => {
+                            const {author_details:{username, rating, avatar_path}, content, created_at, id} = item;
+                            return (
+                                <CardCom key={id}>
+                                    <div><strong>{username}</strong> : <strong style={{color: `${checkingColor(rating)}`}}>{rating}</strong> / 10</div>
+                                    <Flex>
+                                        <img src={avatar_path && avatar_path.split('/').slice(1).join('/')} alt={username}/>
+                                        <p>{content}</p>
+                                    </Flex>
+                                    <div>Posté le {new Date(created_at).toLocaleString()}</div>
+                                </CardCom>
+                            )
+                        }) : `Il n'y a aucun commentaires sur ce film`
+                        }
+                    </Commentaires>
                 </CardDetails>
             }))}
 
@@ -190,3 +230,32 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
 
 export default MovieDetails;
 
+const Commentaires = styled.div`
+margin-top: 5rem;
+`
+
+const CardCom = styled.div`
+background-color: red;
+background-color: transparent;
+backdrop-filter: blur(6px);
+border-radius: 5px;
+border: 1px solid ${({theme}) => theme.navText};
+padding: 1rem;
+margin-bottom: 1rem;
+`
+
+const Flex = styled.div`
+border-top: 1px solid rgba(255,255,255,0.2);
+padding: 1rem;
+margin-top: 1rem;
+img {
+    float: left;
+    margin-right: 1rem;
+}
+p {
+padding-left: 1rem;
+
+}
+border-bottom: 1px solid rgba(255,255,255,0.2);
+margin-bottom: 1rem;
+`

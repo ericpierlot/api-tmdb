@@ -62,6 +62,7 @@ const NavBar: React.FC<NavBarProps> = ({userName, logoutUser, isLogged, logUser,
   
   const handleLogin = () => {
     logUser();
+    if(localStorage.getItem('userName') === 'invite') return history.push('/options')
     history.push('/home');
   }
 
@@ -78,7 +79,7 @@ const NavBar: React.FC<NavBarProps> = ({userName, logoutUser, isLogged, logUser,
         : 
         ( 
         <div style={{textAlign: 'center'}}>
-          <Button onClick={(e) => handleLogin()}>Se connecter</Button>
+          <Button onClick={() => handleLogin()}>Se connecter</Button>
         </div>
         )}
         

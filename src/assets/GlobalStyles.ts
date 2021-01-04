@@ -20,6 +20,6 @@ body {
   margin:0;
   padding:0;
 color: #9bbcbc;
-font-family: 'Roboto';
+font-family: 'Montserrat', sans-serif;
 }
 `;
