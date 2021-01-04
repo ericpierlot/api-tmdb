@@ -199,7 +199,7 @@ const fetchActualMovies = useCallback(
 const fetchTopRatedMovies = useCallback(async (first:number, last:number) => {
   try {
     const API_KEY = `1b7ca23a5b227d1913162e359973237a`;
-    axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`)
+    axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=fr-FR&page=1`)
     .then(({data}) => {
      return setTopRated({
          results: [data.results.slice(first, last)],
@@ -215,7 +215,7 @@ const fetchTopRatedMovies = useCallback(async (first:number, last:number) => {
 const fetchTopPopularMovies = useCallback(async (first:number, last:number) => {
   try {
     const API_KEY = `1b7ca23a5b227d1913162e359973237a`;
-    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
+    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&languagefr-FR&page=1`)
     .then(({data}) => {
      return setTopPopular({
          results: [data.results.slice(first, last)],
