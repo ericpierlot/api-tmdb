@@ -2,9 +2,6 @@ import React, {useRef} from 'react'
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components'
 
-const Top = styled.div`
-
-`;
 
 const WelcomeMessage = styled.article`
 text-align: center;
@@ -74,10 +71,6 @@ opacity: 0.6;
 }
 `
 
-const AuthOptions = styled.article`
-
-`;
-
 interface OptionsProps {
 userName: string;
 newFirstname: () => void;
@@ -110,11 +103,11 @@ const Options: React.FC<OptionsProps> = ({userName, newFirstname, newUserGender,
   
   }
 
-  const checkingGender = (gender:string | null) => {
-    if(gender === 'female') return 'Femme';
-    if(gender === 'male') return 'Homme';
-    return 'Inconnu'
-  }
+  // const checkingGender = (gender:string | null) => {
+  //   if(gender === 'female') return 'Femme';
+  //   if(gender === 'male') return 'Homme';
+  //   return 'Inconnu'
+  // }
   
   const checkNew = (name:string, gender:string) => {
     if(name === null) return true;
