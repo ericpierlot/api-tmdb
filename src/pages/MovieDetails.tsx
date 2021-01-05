@@ -8,9 +8,11 @@ const Container = styled.article`
 margin-top: 1rem;
 display: flex;
 flex-direction: column;
+
 @media (max-width: 840px) {
    width: 85vw;
 }
+
 `
 const CardDetails = styled.div`
 
@@ -19,6 +21,9 @@ const CardDetails = styled.div`
 const Wrapper = styled.div`
 display: flex;
 justify-content: space-between;
+@media (max-width: 1360px) {
+    flex-direction: column;
+}
 @media (max-width: 840px) {
     flex-direction: column;
 
@@ -39,6 +44,15 @@ h2 {
     margin-right: 1rem;
 }
 margin-bottom: 2rem;
+@media (max-width: 1360px) {
+    padding: 0;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   h2 {
+       margin-right: 0;
+   }
+}
 @media (max-width: 840px) {
     padding: 0;
    flex-direction: column;
@@ -54,6 +68,10 @@ const Pictures = styled.div`
 display: flex;
 border-radius: 15px;
 justify-content: center;
+@media (max-width: 1360px) {
+   flex-direction: column;
+   align-items: center;
+}
 @media (max-width: 840px) {
    flex-direction: column;
 }
@@ -64,16 +82,29 @@ img {
 
     &:nth-child(1) {    
     margin-right: 1rem;
+    @media (max-width: 1360px) {
+        max-width: 300px;
+   margin-right: 0;
+}
     @media (max-width: 840px) {
    margin-right: 0;
 }
     }
+    @media (max-width: 1360px) {
+   &:nth-child(2) { 
+       display: none;
+   }
+}
     @media (max-width: 840px) {
    &:nth-child(2) { 
        display: none;
    }
 }
 margin-bottom: 2rem;
+}
+@media (max-width: 1360px) {
+   width: 100%;
+   
 }
 @media (max-width: 840px) {
    width: 100%;
@@ -94,6 +125,9 @@ h2 {
 dt {
     text-align: justify;
     line-height: 1.5rem;
+}
+@media (max-width: 1360px) {
+   width: 100%;
 }
 @media (max-width: 840px) {
    width: 100%;
@@ -117,6 +151,9 @@ div {
     &:hover {
   background-color: rgba(255,255,255,0.1);
 }
+}
+@media (max-width: 1360px) {
+   width: 100%;
 }
 @media (max-width: 840px) {
    width: 100%;
