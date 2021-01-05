@@ -88,8 +88,9 @@ margin-bottom: 2rem;
 `
 
 const Notations = styled.div`
-width: 50%;
+width: 40%;
 padding: 1rem;
+margin: auto;
 a {
   text-decoration: none;
 }
@@ -172,7 +173,7 @@ height: 150px;
 border-radius: 10px;
 background-image: url(${(props) => props.afficheMovie});
 background-repeat: no-repeat;
-background-position: cover;
+background-size: cover;
 position: relative;
 box-shadow: 0 0 30px rgba(0,0,0,0.2);
 
@@ -219,7 +220,7 @@ height: 150px;
 border-radius: 10px;
 background-image: url(${(props) => props.afficheMovie});
 background-repeat: no-repeat;
-background-position: cover;
+background-size: cover;
 position: relative;
 box-shadow: 0 0 30px rgba(0,0,0,0.2);
 
