@@ -15,10 +15,20 @@ interface LayoutProps {
 
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<any>`
 display: flex;
 min-height: 100vh;
 `
+const MENUBURGER = styled.span`
+display: none;
+@media (max-width: 840px) {
+  display: inline;
+  padding: 0.2rem 0.4rem;
+border: 2px solid ${({theme}) => theme.navText};
+border-radius: 5px;
+}
+
+`;
 
 const Layout: React.FC<LayoutProps> = () => {
   const authContext = useContext(AuthContext);
@@ -30,13 +40,17 @@ const Layout: React.FC<LayoutProps> = () => {
     totalResults: 0,
     nextPage: 1,
   })
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => loadUser(), [loadUser]);
   
     return (
-      <Wrapper>
-        <NavBar userName={userName} logoutUser={logoutUser} isLogged={isLogged} logUser={logUser} userGender={userGender}/>
+      <Wrapper menu={isClicked}>
+        <NavBar userName={userName} logoutUser={logoutUser} isLogged={isLogged} logUser={logUser} userGender={userGender} isClicked={isClicked} setIsClicked={setIsClicked} />
           <Container>
+          <MENUBURGER onClick={() => setIsClicked(!isClicked)}>
+          {isClicked ? 'X' : '☰'}
+          </MENUBURGER>
             <Route path='/' exact component={() => <Home />} />
             <LoggedRoute path='/home' exact component={() => <Home />} />
             <Route path='/movies' exact component={() => <Movies />} />

@@ -69,6 +69,9 @@ opacity: 0.6;
 }
   }
 }
+@media (max-width: 840px) {
+   width: 85vw;
+}
 `
 
 interface OptionsProps {

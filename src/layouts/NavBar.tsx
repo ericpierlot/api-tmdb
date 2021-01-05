@@ -9,15 +9,23 @@ interface NavBarProps {
   isLogged: boolean;
   logUser: () => void;
   userGender:string;
+  isClicked: boolean;
+  setIsClicked: (value:boolean) => void;
 }
 
-const Header = styled.header`
+const Header = styled.header<any>`
 padding: 1rem 1rem;
 background-color: #2f4550;
-width: 300px;
+min-width: 250px;
 word-break: break-all;
 img {
   border-radius: 50%;
+}
+@media (max-width:840px) {
+  display: none;
+  width: 70%;
+
+  display: ${(props) => props.render ? 'inline' : 'none'};
 }
 `
 
@@ -56,7 +64,7 @@ outline: none;
 }
 `
 
-const NavBar: React.FC<NavBarProps> = ({userName, logoutUser, isLogged, logUser, userGender}) => {
+const NavBar: React.FC<NavBarProps> = ({userName, logoutUser, isLogged, logUser, userGender, isClicked, setIsClicked}) => {
   const history = useHistory();
 
   
@@ -67,7 +75,7 @@ const NavBar: React.FC<NavBarProps> = ({userName, logoutUser, isLogged, logUser,
   }
 
     return (
-      <Header>
+      <Header render={isClicked}>
        
         {isLogged ? 
         (

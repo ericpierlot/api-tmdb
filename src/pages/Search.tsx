@@ -18,6 +18,9 @@ const TOP = styled.div`
   input {
     width: 250px;
   }
+  @media (max-width: 840px) {
+   margin-top: 1rem;
+}
 `;
 
 const Article = styled.div`

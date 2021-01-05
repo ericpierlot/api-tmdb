@@ -8,6 +8,9 @@ const Container = styled.article`
 margin-top: 1rem;
 display: flex;
 flex-direction: column;
+@media (max-width: 840px) {
+   width: 85vw;
+}
 `
 const CardDetails = styled.div`
 
@@ -16,6 +19,10 @@ const CardDetails = styled.div`
 const Wrapper = styled.div`
 display: flex;
 justify-content: space-between;
+@media (max-width: 840px) {
+    flex-direction: column;
+
+}
 `
 const Top = styled.div`
 width: 100%;
@@ -32,12 +39,24 @@ h2 {
     margin-right: 1rem;
 }
 margin-bottom: 2rem;
+@media (max-width: 840px) {
+    padding: 0;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   h2 {
+       margin-right: 0;
+   }
+}
 `
 
 const Pictures = styled.div`
 display: flex;
 border-radius: 15px;
 justify-content: center;
+@media (max-width: 840px) {
+   flex-direction: column;
+}
 img {
     border-radius: 15px;
     width: auto;
@@ -45,8 +64,20 @@ img {
 
     &:nth-child(1) {    
     margin-right: 1rem;
+    @media (max-width: 840px) {
+   margin-right: 0;
+}
     }
+    @media (max-width: 840px) {
+   &:nth-child(2) { 
+       display: none;
+   }
+}
 margin-bottom: 2rem;
+}
+@media (max-width: 840px) {
+   width: 100%;
+   
 }
 `
 const Resume = styled.div`
@@ -63,6 +94,9 @@ h2 {
 dt {
     text-align: justify;
     line-height: 1.5rem;
+}
+@media (max-width: 840px) {
+   width: 100%;
 }
 `
 
@@ -84,8 +118,13 @@ div {
   background-color: rgba(255,255,255,0.1);
 }
 }
+@media (max-width: 840px) {
+   width: 100%;
+}
 `
 const BackButton = styled.button`
+width: 100px;
+margin-bottom: 1rem;
 padding: 0.5rem 1rem;
 color: ${({theme}) => theme.navText};
 background-color: transparent;
@@ -164,9 +203,10 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
 
     return (
         <>
-        <BackButton onClick={() => history.goBack()}>Retour</BackButton>
+        
         
         <Container>
+        <BackButton onClick={() => history.goBack()}>Retour</BackButton>
             {isError && isError}
             {isLoading ? <Spinner /> : (
                 movieData && movieData.map((item:any) => {
@@ -204,7 +244,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = () => {
                     </Notations>
                     </Wrapper>
                     <Commentaires>
-                        {movieReviews[0].total_results > 0 ?
+                        {movieReviews[0] && movieReviews[0].total_results > 0 ?
                         movieReviews[0].results.map((item:any) => {
                             const {author_details:{username, rating, avatar_path}, content, created_at, id} = item;
                             return (
@@ -232,16 +272,21 @@ export default MovieDetails;
 
 const Commentaires = styled.div`
 margin-top: 5rem;
+@media (max-width: 840px) {
+   width: 100%;
+}
 `
 
 const CardCom = styled.div`
-background-color: red;
-background-color: transparent;
-backdrop-filter: blur(6px);
+
 border-radius: 5px;
 border: 1px solid ${({theme}) => theme.navText};
 padding: 1rem;
 margin-bottom: 1rem;
+@media (max-width: 840px) {
+    overflow: auto;
+   width: 100%;
+}
 `
 
 const Flex = styled.div`
